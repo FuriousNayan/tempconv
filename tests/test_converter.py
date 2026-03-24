@@ -1,14 +1,17 @@
 import pytest
-from src.converter import celsius_to_fahrenheit, celsius_to_kelvin, convert
+from src.converter import celsius_to_fahrenheit, celsius_to_kelvin
 
 # ── Basic tests using fixtures ──────────────────────────────────
+
 
 def test_freezing_c_to_f(freezing_point):
     # freezing_point is injected from conftest.py
     assert celsius_to_fahrenheit(freezing_point["C"]) == freezing_point["F"]
 
+
 def test_boiling_c_to_f(boiling_point):
     assert celsius_to_fahrenheit(boiling_point["C"]) == boiling_point["F"]
+
 
 # ── Parametrize for multiple conversion cases ───────────────────
 
@@ -21,16 +24,19 @@ def test_boiling_c_to_f(boiling_point):
 def test_c_to_f_cases(c, expected_f):
     assert celsius_to_fahrenheit(c) == pytest.approx(expected_f, rel=1e-3)
 
+
 # ── Edge cases ──────────────────────────────────────────────────
 
 @pytest.mark.edge
 def test_absolute_zero_kelvin():
     assert celsius_to_kelvin(-273.15) == pytest.approx(0.0)
 
+
 @pytest.mark.edge
 def test_below_absolute_zero_raises():
     with pytest.raises(ValueError):
         celsius_to_kelvin(-300)
+
 
 # TODO: add more tests to reach ≥ 80% coverage!
 # Suggestions:
@@ -44,6 +50,7 @@ def test_below_absolute_zero_raises():
 @pytest.fixture
 def freezing_point():
     return {"C": 0.0, "F": 32.0, "K": 273.15}
+
 
 # test_converter.py uses it:
 def test_freezing_c_to_k(freezing_point):  # ← name matches fixture
