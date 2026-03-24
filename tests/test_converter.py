@@ -52,8 +52,8 @@ def freezing_point():
     return {"C": 0.0, "F": 32.0, "K": 273.15}
 
 
-# test_converter.py uses it:
 def test_freezing_c_to_k(freezing_point):  # ← name matches fixture
-    assert (celsius_to_kelvin(freezing_point["C"]) 
-    == pytest.approx(freezing_point["K"])
+    assert (
+        celsius_to_kelvin(freezing_point["C"])
+        == pytest.approx(freezing_point["K"])
     )
