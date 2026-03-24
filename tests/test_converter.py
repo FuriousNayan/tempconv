@@ -1,5 +1,5 @@
 import pytest
-from src.converter import celsius_to_fahrenheit, celsius_to_kelvin
+from src.converter import celsius_to_fahrenheit, celsius_to_kelvin, convert
 
 # ── Basic tests using fixtures ──────────────────────────────────
 
