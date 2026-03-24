@@ -57,3 +57,25 @@ def test_freezing_c_to_k(freezing_point):  # ← name matches fixture
         celsius_to_kelvin(freezing_point["C"])
         == pytest.approx(freezing_point["K"])
     )
+
+
+@pytest.mark.parametrize("value, from_u, to_u, expected", [
+    (0,      "C", "F", 32.0),      # C → F
+    (32,     "F", "C", 0.0),       # F → C
+    (0,      "C", "K", 273.15),   # C → K
+    (273.15, "K", "C", 0.0),       # K → C
+    (32,     "F", "K", 273.15),   # F → K
+    (273.15, "K", "F", 32.0),      # K → F
+])
+def test_convert_all_pairs(value, from_u, to_u, expected):
+    assert convert(value, from_u, to_u) == pytest.approx(expected, rel=1e-3)
+
+
+def test_negative_kelvin_raises():
+    with pytest.raises(ValueError):
+        kelvin_to_celsius(-1)   # this should raise ValueError
+
+
+def test_unknown_unit_raises():
+    with pytest.raises(ValueError):
+        convert(100, "C", "X")   # 'X' is not a valid unit
